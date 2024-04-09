@@ -4,14 +4,20 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo "Starting Build Stage"
+                
                 // Checkout the code from your Git repository
+                echo "Checking out code from Git repository"
                 git 'https://github.com/Rsowmya26/dev.git'
                 
                 // Build the Maven project
+                echo "Building Maven project"
                 bat 'mvn clean package'
             }
             post {
                 success {
+                    echo "Build successful. Triggering downstream pipeline."
+                    
                     // Trigger downstream pipeline after successful build
                     build job: 'DownstreamPipelineJobName', parameters: [
                         // add parameters if needed
@@ -22,11 +28,16 @@ pipeline {
         
         stage('Test') {
             steps {
+                echo "Starting Test Stage"
+                
                 // Run Maven tests
+                echo "Running Maven tests"
                 bat 'mvn test'
             }
             post {
                 success {
+                    echo "Tests successful. Triggering another downstream pipeline."
+                    
                     // Trigger downstream pipeline after successful tests
                     build job: 'AnotherDownstreamPipelineJobName', parameters: [
                         // add parameters if needed
@@ -36,4 +47,3 @@ pipeline {
         }
     }
 }
-
