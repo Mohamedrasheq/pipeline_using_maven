@@ -1,6 +1,10 @@
 pipeline {
     agent any
     
+    options {
+        // Define options if necessary
+    }
+    
     stages {
         stage('Build') {
             steps {
@@ -8,7 +12,7 @@ pipeline {
                 
                 // Checkout the code from your Git repository
                 echo "Checking out code from Git repository"
-                git 'https://github.com/Rsowmya26/dev.git'
+                git url: 'https://github.com/Rsowmya26/dev.git', branch: 'main' // Adjust branch if necessary
                 
                 // Build the Maven project
                 echo "Building Maven project"
