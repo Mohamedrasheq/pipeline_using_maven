@@ -10,6 +10,14 @@ pipeline {
                 // Build the Maven project
                 bat 'mvn clean package'
             }
+            post {
+                success {
+                    // Trigger downstream pipeline after successful build
+                    build job: 'DownstreamPipelineJobName', parameters: [
+                        // add parameters if needed
+                    ]
+                }
+            }
         }
         
         stage('Test') {
@@ -17,6 +25,15 @@ pipeline {
                 // Run Maven tests
                 bat 'mvn test'
             }
+            post {
+                success {
+                    // Trigger downstream pipeline after successful tests
+                    build job: 'AnotherDownstreamPipelineJobName', parameters: [
+                        // add parameters if needed
+                    ]
+                }
+            }
         }
     }
 }
+
